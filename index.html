@@ -4,224 +4,254 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
 <title>For Kaviya</title>
-<style>
-  :root {
-    color-scheme: light;
-    --bg-1: #fff5f7;
-    --bg-2: #ffe0e9;
-    --ink: #3a2a2f;
-    --ink-soft: #6b5760;
-    --accent: #e0577a;
-    --card: #ffffff;
-  }
-  * { box-sizing: border-box; }
-  html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    overscroll-behavior: none;
-  }
-  body {
-    min-height: 100dvh;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    background: linear-gradient(160deg, var(--bg-1) 0%, var(--bg-2) 100%);
-    color: var(--ink);
-    overflow: hidden;
-  }
-
-  #stage {
-    position: relative;
-    height: 100dvh;
-    width: 100%;
-  }
-
-  .scene {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 32px 24px calc(env(safe-area-inset-bottom, 0px) + 32px);
-    opacity: 0;
-    transform: translateY(12px);
-    pointer-events: none;
-    transition: opacity 0.45s ease, transform 0.45s ease;
-  }
-  .scene.active {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
-  }
-
-  .emoji {
-    font-size: 44px;
-    margin-bottom: 16px;
-  }
-  h1 {
-    font-size: clamp(24px, 7vw, 32px);
-    margin: 0 0 12px;
-    letter-spacing: 0.01em;
-  }
-  p.body-text {
-    font-size: clamp(16px, 4.5vw, 19px);
-    color: var(--ink-soft);
-    margin: 0;
-    line-height: 1.55;
-    max-width: 340px;
-  }
-
-  .tap-hint {
-    position: absolute;
-    bottom: calc(env(safe-area-inset-bottom, 0px) + 18px);
-    font-size: 13px;
-    color: var(--ink-soft);
-    opacity: 0.6;
-    letter-spacing: 0.02em;
-  }
-
-  .progress {
-    position: absolute;
-    top: calc(env(safe-area-inset-top, 0px) + 16px);
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 6px;
-  }
-  .progress span {
-    width: 18px;
-    height: 3px;
-    border-radius: 2px;
-    background: rgba(224, 87, 122, 0.2);
-    transition: background 0.3s ease;
-  }
-  .progress span.done {
-    background: var(--accent);
-  }
-
-  .video-wrap {
-    width: 100%;
-    max-width: 400px;
-    aspect-ratio: 16 / 9;
-    border-radius: 14px;
-    overflow: hidden;
-    box-shadow: 0 10px 30px rgba(224, 87, 122, 0.18);
-    margin-bottom: 16px;
-  }
-  .video-wrap iframe {
-    width: 100%;
-    height: 100%;
-    border: 0;
-  }
-
-  .final-heart {
-    font-size: 52px;
-    animation: pulse 1.6s ease-in-out infinite;
-  }
-  @keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.12); }
-  }
-</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+  <div id="particles"></div>
+
   <div id="stage">
     <div class="progress" id="progress"></div>
+    <button id="easter-egg" aria-label="hmm">🐍</button>
 
-    <section class="scene" data-scene="0">
-      <div class="emoji">💌</div>
-      <h1>For Kaviya</h1>
-      <p class="body-text">tap to open</p>
-    </section>
-
-    <section class="scene" data-scene="1">
-      <div class="emoji">👀</div>
-      <h1>Hey, curious...</h1>
-      <p class="body-text">[PLACEHOLDER — a short, playful hook line or question that pulls her in]</p>
-    </section>
-
-    <section class="scene" data-scene="2">
-      <div class="emoji">✨</div>
-      <h1>[Beat 1 title]</h1>
-      <p class="body-text">[PLACEHOLDER — first memory / inside joke / journey beat]</p>
-    </section>
-
-    <section class="scene" data-scene="3">
-      <div class="emoji">😄</div>
-      <h1>[Beat 2 title]</h1>
-      <p class="body-text">[PLACEHOLDER — second memory / inside joke]</p>
-    </section>
-
-    <section class="scene" data-scene="4">
-      <div class="emoji">🌙</div>
-      <h1>[Beat 3 title]</h1>
-      <p class="body-text">[PLACEHOLDER — third memory / inside joke]</p>
-    </section>
-
-    <section class="scene" data-scene="5">
-      <div class="emoji">🎈</div>
-      <h1>[Beat 4 title]</h1>
-      <p class="body-text">[PLACEHOLDER — fourth memory / inside joke]</p>
-    </section>
-
-    <section class="scene" data-scene="6">
-      <div class="emoji">🎵</div>
-      <h1>This one's for you</h1>
-      <div class="video-wrap">
-        <iframe
-          src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-          title="Song dedication"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen
-          loading="lazy">
-        </iframe>
+    <!-- SCENE 0 — MYSTERIOUS LANDING / IDENTITY CHECK -->
+    <section class="scene active" data-scene="0">
+      <div class="step active" data-step="a">
+        <div class="eyebrow">psst.</div>
+        <h1>Hey Kaviya <span class="wave">👀</span></h1>
+        <p class="body-text">Someone left something here for you.</p>
+        <p class="body-text">But there's a small problem...</p>
+        <p class="body-text">You have to prove you're actually Kaviya first. <span class="soft">😏</span></p>
+        <button class="btn btn-primary" data-next-step="b">Obviously 🙄</button>
       </div>
-      <p class="body-text">[PLACEHOLDER — one line on why this song]</p>
+      <div class="step" data-step="b">
+        <p class="body-text">Hmm&hellip; suspiciously confident.</p>
+        <p class="body-text">Okay, you may enter. 😂</p>
+        <button class="btn btn-primary" id="enter-btn">Enter →</button>
+      </div>
     </section>
 
-    <section class="scene" data-scene="7">
-      <div class="final-heart">❤️</div>
-      <h1>[PLACEHOLDER final message]</h1>
-      <p class="body-text">[PLACEHOLDER — closing note, sign-off]</p>
+    <!-- SCENE 1 — WHERE IT STARTED (TIMELINE) -->
+    <section class="scene" data-scene="1">
+      <div class="scene-inner">
+        <div class="date-hero">29.07.2026</div>
+        <p class="body-text small">One completely normal conversation.</p>
+        <p class="body-text small">No idea where it was going.</p>
+        <p class="body-text small">No idea we'd end up talking this much.</p>
+        <p class="body-text small">And definitely no idea you'd become this important. ❤️</p>
+
+        <ol class="timeline" id="timeline">
+          <li class="tl-node" data-msg="It started here. Nothing dramatic — just two people talking. That was the whole beginning.">
+            <span class="tl-dot"></span>
+            <span class="tl-label">29 Jul — First conversation</span>
+            <p class="tl-msg"></p>
+          </li>
+          <li class="tl-node" data-msg="Calls started. Comfort followed faster than either of us expected.">
+            <span class="tl-dot"></span>
+            <span class="tl-label">First call — Getting comfortable</span>
+            <p class="tl-msg"></p>
+          </li>
+          <li class="tl-node" data-msg="Late nights, unnecessary teasing, and conversations that had no reason to go on that long — but did anyway.">
+            <span class="tl-dot"></span>
+            <span class="tl-label">Late-night chats — Teasing begins</span>
+            <p class="tl-msg"></p>
+          </li>
+          <li class="tl-node" data-msg="She said it more than once. It only made things more interesting.">
+            <span class="tl-dot"></span>
+            <span class="tl-label">"No chance 😏" — Challenge accepted</span>
+            <p class="tl-msg"></p>
+          </li>
+          <li class="tl-node" data-msg="Every 'no' before this one led here.">
+            <span class="tl-dot"></span>
+            <span class="tl-label">16 Aug — "Okay ❤️"</span>
+            <p class="tl-msg"></p>
+          </li>
+        </ol>
+
+        <button class="btn btn-primary btn-continue">Continue →</button>
+      </div>
     </section>
+
+    <!-- SCENE 2 — KAVIYA RULES & REGULATIONS -->
+    <section class="scene" data-scene="2">
+      <div class="scene-inner">
+        <div class="eyebrow">the rulebook</div>
+        <h1>Kaviya's Rules &amp; Regulations</h1>
+
+        <div class="rules-list">
+          <div class="rule-card"><span class="rule-num">Rule #01</span><span class="rule-text">PS5 ❌</span></div>
+          <div class="rule-card"><span class="rule-num">Rule #02</span><span class="rule-text">No flirting ❌</span></div>
+          <div class="rule-card"><span class="rule-num">Rule #03</span><span class="rule-text">Anbu overflow must be controlled 😌</span></div>
+          <div class="rule-card"><span class="rule-num">Rule #04</span><span class="rule-text">"Good boy" certification allowed occasionally 😏</span></div>
+        </div>
+
+        <button class="btn btn-primary" id="agree-btn">I agree to the rules</button>
+
+        <div class="rules-result" id="rules-result">
+          <p class="error-text">ERROR 404:<br>Gowthaman following rules not found. 😂</p>
+          <p class="body-text small">Rules accepted.<br>Rules will probably not be followed.</p>
+          <button class="btn btn-primary btn-continue">Continue →</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCENE 3 — MEMORY QUIZ -->
+    <section class="scene" data-scene="3">
+      <div class="scene-inner">
+        <div class="eyebrow">quick memory check</div>
+        <h1 class="quiz-progress-label">Question <span id="q-num">1</span> of 3</h1>
+
+        <div class="quiz-q" data-q="0">
+          <p class="body-text small">"Special person ta solli polambita better aagalam 😜"</p>
+          <p class="quiz-question">Who was that special person?</p>
+          <div class="quiz-options">
+            <button class="quiz-opt" data-correct="false">Tea ☕</button>
+            <button class="quiz-opt" data-correct="false">Someone else 👀</button>
+            <button class="quiz-opt" data-correct="true">Gowthaman 😏</button>
+          </div>
+          <p class="quiz-feedback"></p>
+        </div>
+
+        <div class="quiz-q" data-q="1" hidden>
+          <p class="quiz-question">What does Kaviya have a strict "no" policy on?</p>
+          <div class="quiz-options">
+            <button class="quiz-opt" data-correct="false">Pizza 🍕</button>
+            <button class="quiz-opt" data-correct="true">PS5 🎮</button>
+            <button class="quiz-opt" data-correct="false">Ice cream 🍦</button>
+          </div>
+          <p class="quiz-feedback"></p>
+        </div>
+
+        <div class="quiz-q" data-q="2" hidden>
+          <p class="quiz-question">What nickname did she give him while teasing?</p>
+          <div class="quiz-options">
+            <button class="quiz-opt" data-correct="false">Silly boy</button>
+            <button class="quiz-opt" data-correct="true">Good boy 😏</button>
+            <button class="quiz-opt" data-correct="false">Naughty boy</button>
+          </div>
+          <p class="quiz-feedback"></p>
+        </div>
+
+        <button class="btn btn-primary btn-continue" id="quiz-continue" hidden>Continue →</button>
+      </div>
+    </section>
+
+    <!-- SCENE 4 — THE NO CHANCE ARCHIVE -->
+    <section class="scene" data-scene="4">
+      <div class="scene-inner">
+        <div class="eyebrow">official archive</div>
+        <h1>The "No Chance" Archive</h1>
+
+        <div class="archive-grid">
+          <div class="archive-card">No chance 😏</div>
+          <div class="archive-card">Never</div>
+          <div class="archive-card">Noooooooooooo 😂</div>
+          <div class="archive-card">Vaaipey illa</div>
+        </div>
+
+        <button class="btn btn-primary" id="reveal-result-btn">View final result</button>
+
+        <div class="final-card-wrap" id="final-card-wrap">
+          <div class="final-card">Okay ❤️</div>
+          <p class="body-text small">Plot twist.</p>
+          <p class="body-text small">The girl who kept saying "no chance" eventually said yes.</p>
+          <button class="btn btn-primary btn-continue">Continue →</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCENE 5 — THE SERIOUS ONE (TRUST) -->
+    <section class="scene scene-serious" data-scene="5">
+      <div class="scene-inner">
+        <p class="trust-line" data-line="0">Okay&hellip; jokes apart.</p>
+        <p class="trust-line" data-line="1">There was something you told me that stayed with me.</p>
+        <p class="trust-quote" data-line="2">"Enaku unga mela oru trust iruku."</p>
+        <p class="trust-line" data-line="3">I don't take that trust lightly.</p>
+        <p class="trust-line" data-line="4">I'll always try to be worthy of it.</p>
+        <button class="btn btn-outline btn-continue" id="trust-continue">Continue →</button>
+      </div>
+    </section>
+
+    <!-- SCENE 6 — WHAT I ACTUALLY WANT -->
+    <section class="scene" data-scene="6">
+      <div class="scene-inner">
+        <div class="eyebrow">going back to where it began</div>
+        <ul class="values-list">
+          <li>Understanding</li>
+          <li>Acceptance</li>
+          <li>Adaptation</li>
+          <li>Mutual respect</li>
+        </ul>
+
+        <p class="body-text small">I don't want a perfect story.</p>
+        <p class="body-text small">I want something where we can be:</p>
+
+        <ul class="future-list">
+          <li>Friends.</li>
+          <li>Partners.</li>
+          <li>Teammates.</li>
+          <li>Each other's safe place.</li>
+        </ul>
+
+        <p class="body-text small">And occasionally&hellip;</p>
+        <p class="body-text small emphasis">Two idiots teasing each other. 😏</p>
+        <p class="body-text small">That's the kind of "us" I'm looking forward to.</p>
+
+        <button class="btn btn-primary btn-continue">Continue →</button>
+      </div>
+    </section>
+
+    <!-- SCENE 7 — SONG REVEAL -->
+    <section class="scene" data-scene="7">
+      <div class="scene-inner">
+        <div class="envelope-wrap" id="envelope-wrap">
+          <p class="body-text">One last thing.</p>
+          <button class="btn btn-primary" id="open-envelope-btn">Open it 💌</button>
+        </div>
+
+        <div class="song-reveal" id="song-reveal">
+          <p class="body-text">This one's yours, Kaviya. ❤️</p>
+          <p class="song-name" id="song-name"></p>
+          <button class="btn btn-primary" id="play-song-btn">▶ Play</button>
+          <div class="song-player" id="song-player"></div>
+          <button class="btn btn-primary btn-continue">Continue →</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCENE 8 — FINAL MESSAGE -->
+    <section class="scene" data-scene="8">
+      <div class="scene-inner">
+        <p class="body-text small">29 July started with a conversation.</p>
+        <p class="body-text small">Somewhere between the calls, random questions, PS5 arguments, "no flirting" rules, and way too much teasing&hellip;</p>
+        <p class="body-text small">you became someone very special to me.</p>
+        <p class="body-text small">And now&hellip;</p>
+        <p class="body-text small emphasis">I'm really happy that it's us. ❤️</p>
+
+        <div class="ps-block">
+          <p class="body-text small">P.S.</p>
+          <p class="body-text small">You still owe me one thing&hellip;</p>
+          <p class="body-text small">A lifetime supply of "good boy" certificates. 😏</p>
+        </div>
+      </div>
+    </section>
+
   </div>
 
-<script>
-  const scenes = Array.from(document.querySelectorAll('.scene'));
-  const total = scenes.length;
-  const progressEl = document.getElementById('progress');
-  let current = 0;
+  <div class="modal" id="egg-modal" hidden>
+    <div class="modal-card">
+      <p class="body-text small">Snake detected. 🐍</p>
+      <p class="body-text small">Apparently this is where our conversations started getting weird. 😂</p>
+      <p class="body-text small egg-note">(I knew you'd click it. 😏)</p>
+      <button class="btn btn-outline" id="egg-close">close</button>
+    </div>
+  </div>
 
-  for (let i = 0; i < total; i++) {
-    const dot = document.createElement('span');
-    progressEl.appendChild(dot);
-  }
-  const dots = Array.from(progressEl.children);
+  <canvas id="confetti-canvas"></canvas>
 
-  function render() {
-    scenes.forEach((s, i) => s.classList.toggle('active', i === current));
-    dots.forEach((d, i) => d.classList.toggle('done', i <= current));
-    progressEl.style.display = current === 0 ? 'none' : 'flex';
-  }
-
-  function advance() {
-    if (current < total - 1) {
-      current++;
-      render();
-    }
-  }
-
-  document.getElementById('stage').addEventListener('click', (e) => {
-    if (e.target.closest('.video-wrap')) return;
-    advance();
-  });
-
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') advance();
-  });
-
-  render();
-</script>
+  <script src="script.js"></script>
 </body>
 </html>
