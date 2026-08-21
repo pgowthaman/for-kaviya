@@ -1,5 +1,5 @@
 export const SONG_NAME = "Ivan Yaaro — Minnale";
-export const SPOTIFY_EMBED_URL = "https://open.spotify.com/embed/track/3qcs13G09eIWCv31Eyjvqq";
+export const SONG_URL = "https://www.youtube.com/embed/AStAgQLeBeo";
 
 export const PLAYLIST_LINK = "https://music.youtube.com/playlist?list=PLJA-McS7vYgg";
 

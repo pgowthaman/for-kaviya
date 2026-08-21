@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Scene from "../components/Scene.jsx";
-import { SONG_NAME, SPOTIFY_EMBED_URL, PLAYLIST_LINK } from "../data.js";
+import { SONG_NAME, SONG_URL, PLAYLIST_LINK } from "../data.js";
 
 export default function Song({ active, goTo, index }) {
   const [playing, setPlaying] = useState(false);
@@ -17,11 +17,12 @@ export default function Song({ active, goTo, index }) {
           </button>
         )}
         {playing && (
-          <div className="spotify-player">
+          <div className="song-player show">
             <iframe
-              src={SPOTIFY_EMBED_URL}
+              src={SONG_URL}
               title={SONG_NAME}
-              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
               loading="lazy"
             />
           </div>
