@@ -1,9 +1,10 @@
 import { useState } from "react";
 import Scene from "../components/Scene.jsx";
-import { SONG_NAME, SONG_URL } from "../data.js";
+import { SONG_NAME, SONG_URL, PLAYLIST_URL } from "../data.js";
 
 export default function Song({ active, goTo, index }) {
   const [playing, setPlaying] = useState(false);
+  const [playlistPlaying, setPlaylistPlaying] = useState(false);
 
   return (
     <Scene active={active}>
@@ -28,6 +29,28 @@ export default function Song({ active, goTo, index }) {
           </div>
         )}
       </div>
+
+      <p className="body-text small">And if one song isn't enough...</p>
+      <div className="song-card">
+        <p className="song-name">A playlist, just for you 🎵</p>
+        {!playlistPlaying && (
+          <button className="btn btn-primary" onClick={() => setPlaylistPlaying(true)}>
+            ▶ PLAY PLAYLIST
+          </button>
+        )}
+        {playlistPlaying && (
+          <div className="song-player show">
+            <iframe
+              src={PLAYLIST_URL}
+              title="Playlist"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              loading="lazy"
+            />
+          </div>
+        )}
+      </div>
+
       <button className="btn btn-primary btn-continue" onClick={() => goTo(index + 1)}>
         Continue →
       </button>

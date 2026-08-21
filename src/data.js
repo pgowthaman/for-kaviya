@@ -1,6 +1,7 @@
-// Placeholders — replace before sending the final link.
-export const SONG_NAME = "[ADD SONG NAME HERE]";
-export const SONG_URL = "https://www.youtube.com/embed/VIDEO_ID_PLACEHOLDER";
+export const SONG_NAME = "Ivan Yaaro — Minnale";
+export const SONG_URL = "https://www.youtube.com/embed/AStAgQLeBeo";
+
+export const PLAYLIST_URL = "https://www.youtube.com/embed/videoseries?list=PLJA-McS7vYgg";
 
 export const wrongAnswerMessages = [
   "Hmm... suspicious. 🤨",
