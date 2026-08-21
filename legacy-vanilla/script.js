@@ -10,7 +10,6 @@ const SONG_URL = "https://www.youtube.com/embed/VIDEO_ID_PLACEHOLDER"; // YouTub
 const scenes = Array.from(document.querySelectorAll(".scene"));
 const total = scenes.length;
 const progressEl = document.getElementById("progress");
-const eggBtn = document.getElementById("easter-egg");
 let current = 0;
 
 for (let i = 0; i < total; i++) {
@@ -27,106 +26,60 @@ function goTo(index) {
 
   const chromeVisible = current > 0;
   progressEl.style.display = chromeVisible ? "flex" : "none";
-  eggBtn.style.display = chromeVisible ? "block" : "none";
 
-  document.body.classList.toggle("mood-serious", current === 5);
+  const mood = scenes[current].getAttribute("data-mood");
+  document.body.className = "mood-" + mood;
 
-  if (current === 5) runTrustReveal();
-  if (current === 4) {
-    // handled by button, nothing on enter
-  }
-  if (current === 8) setTimeout(() => fireConfetti(160), 400);
+  onEnterScene(current);
+}
+
+function onEnterScene(index) {
+  if (index === 1) document.getElementById("timeline-1").classList.add("play");
+  if (index === 2) document.getElementById("exhibit-a").classList.add("play");
+  if (index === 3) document.getElementById("timeline-2").classList.add("play");
+  if (index === 5) runTrustReveal();
+  if (index === 6) document.querySelector('.scene[data-scene="6"] .values-list').classList.add("play");
+  if (index === 8) runCelebration();
 }
 
 // ---------------------------------------------------------------------------
-// Scene 0 — mysterious landing / identity check
+// Generic ".btn-continue" wiring for simple forward-only scenes
 // ---------------------------------------------------------------------------
-document.querySelectorAll("[data-next-step]").forEach((btn) => {
+document.querySelectorAll(".btn-continue").forEach((btn) => {
+  if (btn.id === "trust-continue" || btn.id === "celebrate-continue") return; // wired separately
   btn.addEventListener("click", () => {
-    const targetStep = btn.getAttribute("data-next-step");
-    document.querySelectorAll('.scene[data-scene="0"] .step').forEach((s) => {
-      s.classList.toggle("active", s.getAttribute("data-step") === targetStep);
-    });
+    const scene = btn.closest(".scene");
+    const idx = Number(scene.getAttribute("data-scene"));
+    goTo(idx + 1);
   });
 });
-document.getElementById("enter-btn").addEventListener("click", () => goTo(1));
 
 // ---------------------------------------------------------------------------
-// Scene 1 — timeline
+// Timeline expand/collapse (used by both timelines)
 // ---------------------------------------------------------------------------
 document.querySelectorAll(".tl-node").forEach((node) => {
-  const msgEl = node.querySelector(".tl-msg");
-  msgEl.textContent = node.getAttribute("data-msg");
-  node.addEventListener("click", () => {
-    node.classList.toggle("opened");
-  });
+  node.addEventListener("click", () => node.classList.toggle("opened"));
 });
 
 // ---------------------------------------------------------------------------
-// Scene 2 — rules
+// Scene 4 — PS5 test
 // ---------------------------------------------------------------------------
-const agreeBtn = document.getElementById("agree-btn");
-const rulesResult = document.getElementById("rules-result");
-agreeBtn.addEventListener("click", () => {
-  rulesResult.classList.add("show");
-  agreeBtn.style.display = "none";
+const ps5Ask = document.querySelector('.ps5-step[data-step="ask"]');
+const ps5Result = document.querySelector('.ps5-step[data-step="result"]');
+const ps5Reaction = document.getElementById("ps5-reaction");
+const ps5Followup = document.getElementById("ps5-followup");
+
+document.getElementById("ps5-no").addEventListener("click", () => {
+  ps5Reaction.textContent = "Expected answer. 😂";
+  ps5Followup.textContent = "Fine. I can live with it.";
+  ps5Ask.hidden = true;
+  ps5Result.hidden = false;
 });
-
-// ---------------------------------------------------------------------------
-// Scene 3 — memory quiz
-// ---------------------------------------------------------------------------
-const quizQuestions = Array.from(document.querySelectorAll(".quiz-q"));
-const qNumEl = document.getElementById("q-num");
-const quizContinueBtn = document.getElementById("quiz-continue");
-let quizIndex = 0;
-
-const feedbackByQuestion = [
-  'Correct. I remember that one too. 😌<br><span style="opacity:.7;font-size:13px">"Peru Gowthaman ah kooda irukalam 😜"</span>',
-  "Correct. Some rules are just non-negotiable. 😌",
-  "Correct. Certification pending. 😏",
-];
-
-quizQuestions.forEach((q, qi) => {
-  const opts = Array.from(q.querySelectorAll(".quiz-opt"));
-  const feedback = q.querySelector(".quiz-feedback");
-
-  opts.forEach((opt) => {
-    opt.addEventListener("click", () => {
-      const isCorrect = opt.getAttribute("data-correct") === "true";
-      if (isCorrect) {
-        opts.forEach((o) => (o.disabled = true));
-        opt.classList.add("correct");
-        feedback.innerHTML = feedbackByQuestion[qi];
-        setTimeout(() => advanceQuiz(qi), 1100);
-      } else {
-        opt.classList.add("wrong");
-        feedback.textContent = "Not quite 😏 try again.";
-        setTimeout(() => opt.classList.remove("wrong"), 400);
-      }
-    });
-  });
-});
-
-function advanceQuiz(finishedIndex) {
-  quizQuestions[finishedIndex].hidden = true;
-  const nextIndex = finishedIndex + 1;
-  if (nextIndex < quizQuestions.length) {
-    quizQuestions[nextIndex].hidden = false;
-    qNumEl.textContent = String(nextIndex + 1);
-  } else {
-    quizContinueBtn.hidden = false;
-  }
-}
-
-// ---------------------------------------------------------------------------
-// Scene 4 — no chance archive
-// ---------------------------------------------------------------------------
-const revealResultBtn = document.getElementById("reveal-result-btn");
-const finalCardWrap = document.getElementById("final-card-wrap");
-revealResultBtn.addEventListener("click", () => {
-  finalCardWrap.classList.add("show");
-  revealResultBtn.style.display = "none";
-  fireConfetti(90);
+document.getElementById("ps5-yes").addEventListener("click", () => {
+  ps5Reaction.textContent = "Wait, really? 😲";
+  ps5Followup.textContent = "I'll believe it when I see it. 😏";
+  ps5Ask.hidden = true;
+  ps5Result.hidden = false;
 });
 
 // ---------------------------------------------------------------------------
@@ -160,11 +113,11 @@ async function runTrustReveal() {
 
   for (const line of lines) {
     if (line === quoteEl) {
-      await typeWriter(quoteEl, quoteText, 45);
-      await new Promise((r) => setTimeout(r, 400));
+      await typeWriter(quoteEl, quoteText, 40);
+      await new Promise((r) => setTimeout(r, 350));
     } else {
       line.classList.add("shown");
-      await new Promise((r) => setTimeout(r, 900));
+      await new Promise((r) => setTimeout(r, 550));
     }
   }
   document.getElementById("trust-continue").classList.add("shown");
@@ -173,44 +126,88 @@ async function runTrustReveal() {
 document.getElementById("trust-continue").addEventListener("click", () => goTo(6));
 
 // ---------------------------------------------------------------------------
-// Generic ".btn-continue" wiring for simple scenes
+// Scene 7 — the proposal (reject-dodge mechanic)
 // ---------------------------------------------------------------------------
-document.querySelectorAll(".btn-continue").forEach((btn) => {
-  if (btn.id === "trust-continue") return; // wired separately
-  btn.addEventListener("click", () => {
-    const scene = btn.closest(".scene");
-    const idx = Number(scene.getAttribute("data-scene"));
-    goTo(idx + 1);
-  });
+const arena = document.getElementById("proposal-arena");
+const rejectBtn = document.getElementById("reject-btn");
+const dodgeMsg = document.getElementById("dodge-msg");
+const askStep = document.querySelector('.proposal-step[data-step="ask"]');
+const finalChoiceStep = document.querySelector('.proposal-step[data-step="final-choice"]');
+const noLandingStep = document.querySelector('.proposal-step[data-step="no-landing"]');
+
+const dodgeMessages = ["Dare to click reject? 😏", "Nice try 😂", "Are you really sure? 👀"];
+let dodgeAttempts = 0;
+
+function goToCelebration() {
+  goTo(8);
+}
+
+function repositionReject() {
+  const bounds = arena.getBoundingClientRect();
+  const btnRect = rejectBtn.getBoundingClientRect();
+  const maxLeft = Math.max(0, bounds.width - btnRect.width);
+  const maxTop = Math.max(0, bounds.height - btnRect.height);
+  const newLeft = Math.random() * maxLeft;
+  const newTop = Math.random() * maxTop;
+  rejectBtn.style.left = `${newLeft + btnRect.width / 2}px`;
+  rejectBtn.style.top = `${newTop}px`;
+  rejectBtn.style.transform = "translateX(-50%)";
+}
+
+rejectBtn.addEventListener("click", () => {
+  dodgeAttempts++;
+  if (dodgeAttempts <= 3) {
+    dodgeMsg.textContent = dodgeMessages[dodgeAttempts - 1];
+    repositionReject();
+  }
+  if (dodgeAttempts === 3) {
+    setTimeout(() => {
+      dodgeMsg.textContent = "Okay okay... one last chance.";
+      setTimeout(() => {
+        askStep.hidden = true;
+        finalChoiceStep.hidden = false;
+      }, 900);
+    }, 500);
+  }
 });
 
+document.getElementById("yes-btn-1").addEventListener("click", goToCelebration);
+document.getElementById("yes-btn-2").addEventListener("click", goToCelebration);
+
+document.getElementById("no-btn").addEventListener("click", () => {
+  finalChoiceStep.hidden = true;
+  noLandingStep.hidden = false;
+});
+
+document.getElementById("continue-anyway").addEventListener("click", () => goTo(9));
+
 // ---------------------------------------------------------------------------
-// Scene 7 — song reveal
+// Scene 8 — celebration
+// ---------------------------------------------------------------------------
+let celebrationPlayed = false;
+async function runCelebration() {
+  if (celebrationPlayed) return;
+  celebrationPlayed = true;
+  fireConfetti(140);
+  const lines = Array.from(document.querySelectorAll(".celebrate-line"));
+  for (const line of lines) {
+    line.classList.add("shown");
+    await new Promise((r) => setTimeout(r, 700));
+  }
+  document.getElementById("celebrate-continue").classList.add("shown");
+}
+document.getElementById("celebrate-continue").addEventListener("click", () => goTo(9));
+
+// ---------------------------------------------------------------------------
+// Scene 9 — song
 // ---------------------------------------------------------------------------
 document.getElementById("song-name").textContent = SONG_NAME;
-
-document.getElementById("open-envelope-btn").addEventListener("click", () => {
-  document.getElementById("envelope-wrap").style.display = "none";
-  document.getElementById("song-reveal").classList.add("show");
-});
-
 document.getElementById("play-song-btn").addEventListener("click", (e) => {
   const player = document.getElementById("song-player");
   player.innerHTML = `<iframe src="${SONG_URL}" title="${SONG_NAME}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>`;
   player.classList.add("show");
   e.target.disabled = true;
   e.target.textContent = "Playing…";
-});
-
-// ---------------------------------------------------------------------------
-// Easter egg
-// ---------------------------------------------------------------------------
-const eggModal = document.getElementById("egg-modal");
-eggBtn.addEventListener("click", () => {
-  eggModal.hidden = false;
-});
-document.getElementById("egg-close").addEventListener("click", () => {
-  eggModal.hidden = true;
 });
 
 // ---------------------------------------------------------------------------
@@ -247,9 +244,11 @@ function resizeCanvas() {
 window.addEventListener("resize", resizeCanvas);
 resizeCanvas();
 
-const confettiColors = ["#ff8fab", "#ff6f94", "#d9b06a", "#f6eef2"];
+const confettiColors = ["#ff9fb5", "#ff6f94", "#d9b06a", "#ffb26b", "#f6eef2"];
+const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 function fireConfetti(count) {
+  if (reducedMotion) return;
   const originX = confettiCanvas.width / 2;
   const originY = confettiCanvas.height * 0.35;
   for (let i = 0; i < count; i++) {
@@ -271,7 +270,7 @@ function fireConfetti(count) {
 function tickConfetti() {
   ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
   confettiPieces.forEach((p) => {
-    p.vy += 0.22; // gravity
+    p.vy += 0.22;
     p.x += p.vx;
     p.y += p.vy;
     p.rot += p.vr;
@@ -293,6 +292,6 @@ function tickConfetti() {
 }
 
 // ---------------------------------------------------------------------------
-// Keyboard support (Enter/Space activates focused control; no free-roam skip)
+// Init
 // ---------------------------------------------------------------------------
 goTo(0);

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<title>For Kaviya</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="mood-mystery">
+
+  <div id="mood-bg"></div>
+  <div id="particles"></div>
+
+  <div id="stage">
+    <div class="progress" id="progress"></div>
+
+    <!-- SCENE 0 — MYSTERY -->
+    <section class="scene active" data-scene="0" data-mood="mystery">
+      <div class="scene-inner">
+        <div class="eyebrow">psst.</div>
+        <h1>Hey Kaviya <span class="wave">👀</span></h1>
+        <p class="body-text">You probably scanned this without knowing what you're getting into.</p>
+        <p class="body-text">Good.</p>
+        <p class="body-text">That's exactly how I wanted it. 😏</p>
+        <button class="btn btn-primary btn-continue">START →</button>
+      </div>
+    </section>
+
+    <!-- SCENE 1 — BEFORE I ASK YOU SOMETHING -->
+    <section class="scene" data-scene="1" data-mood="playful">
+      <div class="scene-inner">
+        <p class="body-text">Before I ask you something&hellip;</p>
+        <p class="body-text">There are a few things I want you to remember.</p>
+
+        <ol class="timeline" id="timeline-1">
+          <li class="tl-node"><span class="tl-dot"></span><span class="tl-label">29.07.2026</span><p class="tl-msg">The day this started.</p></li>
+          <li class="tl-node"><span class="tl-dot"></span><span class="tl-label">First calls</span><p class="tl-msg">When conversations somehow became calls.</p></li>
+          <li class="tl-node"><span class="tl-dot"></span><span class="tl-label">Late-night chats</span><p class="tl-msg">When good night stopped meaning good night. 😂</p></li>
+          <li class="tl-node"><span class="tl-dot"></span><span class="tl-label">Teasing</span><p class="tl-msg">When you started giving me impossible tasks.</p></li>
+          <li class="tl-node"><span class="tl-dot"></span><span class="tl-label">PS5</span><p class="tl-msg">When I discovered how strict "NO" can be. 😂</p></li>
+          <li class="tl-node"><span class="tl-dot"></span><span class="tl-label">Trust</span><p class="tl-msg">When this started becoming something more.</p></li>
+          <li class="tl-node"><span class="tl-dot"></span><span class="tl-label">16.08.2026</span><p class="tl-msg">When "no chance" became "okay". ❤️</p></li>
+        </ol>
+
+        <button class="btn btn-primary btn-continue">Continue →</button>
+      </div>
+    </section>
+
+    <!-- SCENE 2 — EXHIBIT A: YOU -->
+    <section class="scene" data-scene="2" data-mood="playful">
+      <div class="scene-inner">
+        <div class="eyebrow">exhibit a</div>
+        <h1>You.</h1>
+        <ul class="reveal-list" id="exhibit-a">
+          <li>You care.</li>
+          <li>You ask questions.</li>
+          <li>You remember small things.</li>
+          <li>You give opinions even when I don't ask. 😏</li>
+          <li>You say "no" with impressive confidence.</li>
+          <li>And somehow&hellip;</li>
+          <li class="emphasis">I like all of it.</li>
+        </ul>
+        <button class="btn btn-primary btn-continue">Continue →</button>
+      </div>
+    </section>
+
+    <!-- SCENE 3 — EXHIBIT B: US -->
+    <section class="scene" data-scene="3" data-mood="playful">
+      <div class="scene-inner">
+        <div class="eyebrow">exhibit b</div>
+        <h1>Us.</h1>
+        <ol class="timeline" id="timeline-2">
+          <li class="tl-node"><span class="tl-dot"></span><span class="tl-label">29 Jul</span><p class="tl-msg">Just two people talking.</p></li>
+          <li class="tl-node"><span class="tl-dot"></span><span class="tl-label">First calls</span><p class="tl-msg">Okay&hellip; this is getting interesting.</p></li>
+          <li class="tl-node"><span class="tl-dot"></span><span class="tl-label">PS5 war 🎮</span><p class="tl-msg">Strict NO ❌</p></li>
+          <li class="tl-node"><span class="tl-dot"></span><span class="tl-label">No flirting</span><p class="tl-msg">Rule established.</p></li>
+          <li class="tl-node"><span class="tl-dot"></span><span class="tl-label">Special person 😏</span><p class="tl-msg">Gowthaman? Maybe.</p></li>
+          <li class="tl-node"><span class="tl-dot"></span><span class="tl-label">Trust ❤️</span><p class="tl-msg">Something changed here.</p></li>
+          <li class="tl-node"><span class="tl-dot"></span><span class="tl-label">16 Aug</span><p class="tl-msg">Okay.</p></li>
+        </ol>
+        <button class="btn btn-primary btn-continue">Continue →</button>
+      </div>
+    </section>
+
+    <!-- SCENE 4 — THE PS5 TEST -->
+    <section class="scene" data-scene="4" data-mood="playful">
+      <div class="scene-inner">
+        <div class="ps5-step" data-step="ask">
+          <p class="body-text">Important question before we continue&hellip;</p>
+          <p class="quiz-question">Has the PS5 ban been officially lifted?</p>
+          <div class="ps5-buttons">
+            <button class="btn btn-outline" id="ps5-yes">YES</button>
+            <button class="btn btn-outline" id="ps5-no">NO ❌</button>
+          </div>
+        </div>
+        <div class="ps5-step" data-step="result" hidden>
+          <p class="body-text" id="ps5-reaction"></p>
+          <p class="body-text" id="ps5-followup"></p>
+          <p class="body-text">But I have one final question&hellip;</p>
+          <button class="btn btn-primary btn-continue">Continue →</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCENE 5 — SERIOUS TRANSITION -->
+    <section class="scene" data-scene="5" data-mood="serious">
+      <div class="scene-inner">
+        <p class="trust-line" data-d="0">Okay&hellip;</p>
+        <p class="trust-line" data-d="1">Enough games.</p>
+        <p class="trust-line" data-d="2">I've been thinking about something for a while.</p>
+        <p class="trust-line" data-d="3">We started with conversations.</p>
+        <p class="trust-line" data-d="4">Then calls.</p>
+        <p class="trust-line" data-d="5">Then teasing.</p>
+        <p class="trust-line" data-d="6">Somewhere along the way&hellip;</p>
+        <p class="trust-line" data-d="7">I started looking forward to talking to you every day.</p>
+        <p class="trust-line" data-d="8">And when you told me you trusted me&hellip;</p>
+        <p class="trust-line" data-d="9">That meant more to me than you probably realize.</p>
+        <p class="trust-quote" data-d="10">"Enaku unga mela oru trust iruku."</p>
+        <p class="trust-line" data-d="11">I don't take that trust lightly.</p>
+        <p class="trust-line" data-d="12">I'll always try to be worthy of it.</p>
+        <button class="btn btn-outline btn-continue" id="trust-continue">Continue →</button>
+      </div>
+    </section>
+
+    <!-- SCENE 6 — WHAT I WANT -->
+    <section class="scene" data-scene="6" data-mood="warm">
+      <div class="scene-inner">
+        <p class="body-text">I don't know exactly what the future will look like.</p>
+        <p class="body-text">But I know who I'd like beside me while we figure it out.</p>
+
+        <ul class="values-list">
+          <li>Understanding.</li>
+          <li>Acceptance.</li>
+          <li>Mutual respect.</li>
+          <li>Support.</li>
+          <li>Friendship.</li>
+          <li>Partnership.</li>
+        </ul>
+
+        <p class="body-text small">Not just for the big moments.</p>
+        <p class="body-text small">For the random conversations.</p>
+        <p class="body-text small">The stupid arguments.</p>
+        <p class="body-text small">The late-night calls.</p>
+        <p class="body-text small">The teasing.</p>
+        <p class="body-text small">The caring.</p>
+        <p class="body-text small">The boring days.</p>
+        <p class="body-text small">And everything in between.</p>
+
+        <button class="btn btn-primary btn-continue">Continue →</button>
+      </div>
+    </section>
+
+    <!-- SCENE 7 — THE PROPOSAL -->
+    <section class="scene" data-scene="7" data-mood="proposal">
+      <div class="scene-inner">
+
+        <div class="proposal-step" data-step="ask">
+          <h1 class="proposal-name">Kaviya</h1>
+          <p class="body-text">I think you already know what I'm about to ask&hellip;</p>
+          <p class="proposal-question">Will you be my partner? ❤️</p>
+          <p class="body-text">Will you choose us?</p>
+
+          <div class="proposal-arena" id="proposal-arena">
+            <button class="btn btn-yes" id="yes-btn-1">YES ❤️</button>
+            <button class="btn btn-reject" id="reject-btn">REJECT 😏</button>
+          </div>
+          <p class="dodge-msg" id="dodge-msg"></p>
+        </div>
+
+        <div class="proposal-step" data-step="final-choice" hidden>
+          <p class="body-text">Okay. No more cheating.</p>
+          <p class="body-text">Your choice. ❤️</p>
+          <div class="final-choice-buttons">
+            <button class="btn btn-yes" id="yes-btn-2">YES ❤️</button>
+            <button class="btn btn-outline" id="no-btn">NO</button>
+          </div>
+        </div>
+
+        <div class="proposal-step" data-step="no-landing" hidden>
+          <p class="body-text">That's okay. ❤️</p>
+          <p class="body-text">Thank you for playing along.</p>
+          <p class="body-text">And whatever happens, I'm glad we had these conversations.</p>
+          <button class="btn btn-link" id="continue-anyway">there's a bit more, if you'd like →</button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SCENE 8 — YES CELEBRATION -->
+    <section class="scene" data-scene="8" data-mood="celebrate">
+      <div class="scene-inner">
+        <p class="celebrate-line" data-d="0">I KNEW IT. 😏❤️</p>
+        <p class="celebrate-line" data-d="1">Okay&hellip;</p>
+        <p class="celebrate-line" data-d="2">Technically I didn't know.</p>
+        <p class="celebrate-line" data-d="3">But I was hoping. 😂</p>
+        <p class="celebrate-line emphasis" data-d="4">Welcome to the next chapter, Kaviya.</p>
+        <button class="btn btn-primary btn-continue" id="celebrate-continue">Continue →</button>
+      </div>
+    </section>
+
+    <!-- SCENE 9 — SONG -->
+    <section class="scene" data-scene="9" data-mood="romantic">
+      <div class="scene-inner">
+        <p class="body-text">One last thing&hellip;</p>
+        <p class="body-text">This song is for you.</p>
+        <div class="song-card">
+          <p class="song-name" id="song-name"></p>
+          <button class="btn btn-primary" id="play-song-btn">▶ PLAY</button>
+          <div class="song-player" id="song-player"></div>
+        </div>
+        <button class="btn btn-primary btn-continue">Continue →</button>
+      </div>
+    </section>
+
+    <!-- SCENE 10 — FINAL -->
+    <section class="scene" data-scene="10" data-mood="romantic">
+      <div class="scene-inner">
+        <p class="final-dates">29.07 → 16.08 → ❤️</p>
+        <p class="body-text small">One conversation.</p>
+        <p class="body-text small">A lot of teasing.</p>
+        <p class="body-text small">A little bit of chaos.</p>
+        <p class="body-text small">And one very important YES.</p>
+        <p class="body-text small emphasis">Let's see where this takes us. ❤️</p>
+        <div class="ps-block">
+          <p class="body-text small">P.S.</p>
+          <p class="body-text small">PS5 still negotiable. 😏</p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <canvas id="confetti-canvas"></canvas>
+
+  <script src="script.js"></script>
+</body>
+</html>
