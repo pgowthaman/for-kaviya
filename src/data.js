@@ -19,13 +19,13 @@ export const verifyQuestions = [
     question: "What is our special number?",
     options: [
       { label: "7 😏", value: "7" },
-      { label: "16 ❤️", value: "16" },
-      { label: "24 ❤️", value: "24" },
+      { label: "16", value: "16" },
+      { label: "24", value: "24" },
       { label: "29 😂", value: "29" },
     ],
     correct: "24",
     reveal: [
-      "Correct. ❤️",
+      "Correct.",
       "You — 24 April.",
       "Me — 24 May.",
       "Same date.",
@@ -81,14 +81,14 @@ export const verifyQuestions = [
       { label: "His amazing flirting skills 😏", value: "flirting" },
     ],
     correct: "vibe",
-    reveal: ["Correct. ❤️", "You remembered the important part.", "Maybe I did make a good first impression after all. 😌"],
+    reveal: ["Correct.", "You remembered the important part.", "Maybe I did make a good first impression after all. 😌"],
   },
 ];
 
 export const verifyCompleteLines = [
   "4 / 4 — VERIFIED ✅",
   "Identity confirmed.",
-  "Kaviya detected. ❤️",
+  "Kaviya detected.",
   "Access granted. 🔓",
   "There's just one small problem...",
   "You have no idea what you're about to unlock. 👀",
@@ -99,9 +99,7 @@ export const timelineRemember = [
   { label: "First calls", msg: "When conversations somehow became calls." },
   { label: "Late-night chats", msg: "When good night stopped meaning good night. 😂" },
   { label: "Teasing", msg: "When you started giving me impossible tasks." },
-  { label: "PS5", msg: 'When I discovered how strict "NO" can be. 😂' },
-  { label: "Trust", msg: "When this started becoming something more." },
-  { label: "16.08.2026", msg: 'When "no chance" became "okay". ❤️' },
+  { label: "16.08.2026", msg: 'When "no chance" became "okay".' },
 ];
 
 export const exhibitA = [
@@ -120,7 +118,7 @@ export const timelineUs = [
   { label: "PS5 war 🎮", msg: "Strict NO ❌" },
   { label: "No flirting", msg: "Rule established." },
   { label: "Special person 😏", msg: "Gowthaman? Maybe." },
-  { label: "Trust ❤️", msg: "Something changed here." },
+  { label: "Trust", msg: "Something changed here." },
   { label: "16 Aug", msg: "Okay." },
 ];
 

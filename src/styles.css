@@ -195,16 +195,6 @@ p.body-text.emphasis, .celebrate-line.emphasis { color: var(--accent); font-weig
   top: 100px;
   transform: translateX(-50%);
 }
-.btn-link {
-  background: none;
-  border: none;
-  color: var(--ink-faint);
-  font-size: 13.5px;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  padding: 10px;
-}
-
 /* ---------- progress ---------- */
 .progress {
   position: fixed;
@@ -488,12 +478,6 @@ p.body-text.emphasis, .celebrate-line.emphasis { color: var(--accent); font-weig
   color: var(--ink-faint);
   margin-top: 8px;
 }
-.final-choice-buttons {
-  display: flex;
-  gap: 14px;
-  margin-top: 10px;
-}
-
 /* ---------- celebration ---------- */
 .celebrate-line {
   font-size: clamp(17px, 5vw, 21px);
