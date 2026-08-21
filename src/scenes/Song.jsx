@@ -1,10 +1,9 @@
 import { useState } from "react";
 import Scene from "../components/Scene.jsx";
-import { SONG_NAME, SONG_URL, PLAYLIST_URL } from "../data.js";
+import { SONG_NAME, SPOTIFY_EMBED_URL, PLAYLIST_LINK } from "../data.js";
 
 export default function Song({ active, goTo, index }) {
   const [playing, setPlaying] = useState(false);
-  const [playlistPlaying, setPlaylistPlaying] = useState(false);
 
   return (
     <Scene active={active}>
@@ -18,12 +17,11 @@ export default function Song({ active, goTo, index }) {
           </button>
         )}
         {playing && (
-          <div className="song-player show">
+          <div className="spotify-player">
             <iframe
-              src={SONG_URL}
+              src={SPOTIFY_EMBED_URL}
               title={SONG_NAME}
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
               loading="lazy"
             />
           </div>
@@ -33,22 +31,9 @@ export default function Song({ active, goTo, index }) {
       <p className="body-text small">And if one song isn't enough...</p>
       <div className="song-card">
         <p className="song-name">A playlist, just for you 🎵</p>
-        {!playlistPlaying && (
-          <button className="btn btn-primary" onClick={() => setPlaylistPlaying(true)}>
-            ▶ PLAY PLAYLIST
-          </button>
-        )}
-        {playlistPlaying && (
-          <div className="song-player show">
-            <iframe
-              src={PLAYLIST_URL}
-              title="Playlist"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-              loading="lazy"
-            />
-          </div>
-        )}
+        <a className="btn btn-primary" href={PLAYLIST_LINK} target="_blank" rel="noopener noreferrer">
+          ▶ Open Playlist on YouTube
+        </a>
       </div>
 
       <button className="btn btn-primary btn-continue" onClick={() => goTo(index + 1)}>
