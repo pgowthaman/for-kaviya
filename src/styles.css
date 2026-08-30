@@ -539,16 +539,19 @@ p.body-text.emphasis, .celebrate-line.emphasis { color: var(--accent); font-weig
 
 /* ---------- moment pages ---------- */
 .moment-photo {
-  width: 100%;
-  max-width: 340px;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
+  width: auto;
+  max-width: min(100%, 340px);
+  max-height: 60vh;
+  object-fit: contain;
   border-radius: var(--radius);
   border: 1px solid color-mix(in srgb, var(--accent) 24%, var(--border));
   box-shadow: 0 20px 44px rgba(0, 0, 0, 0.45);
   margin: 6px 0 4px;
 }
 .moment-photo-empty {
+  width: 100%;
+  max-width: 340px;
+  aspect-ratio: 4 / 3;
   display: flex;
   align-items: center;
   justify-content: center;
