@@ -543,6 +543,7 @@ p.body-text.emphasis, .celebrate-line.emphasis { color: var(--accent); font-weig
 .scene.scene-scroll {
   align-items: flex-start;
   padding-top: calc(env(safe-area-inset-top, 0px) + 64px);
+  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 40px);
 }
 .scene.scene-scroll .scene-inner { margin-top: 0; }
 
@@ -573,7 +574,7 @@ p.body-text.emphasis, .celebrate-line.emphasis { color: var(--accent); font-weig
   flex-direction: column;
   align-items: center;
   gap: 10px;
-  padding-bottom: 56px; /* clear the chapter rail */
+  padding-bottom: 104px; /* clear the fixed chapter rail at the bottom */
 }
 .chapter-body h1 { margin-bottom: 2px; }
 
