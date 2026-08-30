@@ -15,18 +15,79 @@ import Proposal from "./scenes/Proposal.jsx";
 import Celebration from "./scenes/Celebration.jsx";
 import Song from "./scenes/Song.jsx";
 import Final from "./scenes/Final.jsx";
-import MomentScene from "./scenes/MomentScene.jsx";
-import MomentsNav from "./components/MomentsNav.jsx";
-import { SCENE_META, verifyQuestions, timelineRemember, timelineUs, moments } from "./data.js";
+import Chapter from "./scenes/Chapter.jsx";
+import ChapterNav from "./components/ChapterNav.jsx";
+import { SCENE_META, verifyQuestions, timelineRemember, timelineUs, chapters } from "./data.js";
 
 const MAIN_DOT_COUNT = SCENE_META.filter((s) => s.section === "main").length;
-const MOMENTS_START = SCENE_META.findIndex((s) => s.section === "moments");
+const CH_START = SCENE_META.findIndex((s) => s.section === "chapters");
+const CH_END = CH_START + chapters.length - 1;
 
 export default function App() {
   const [current, setCurrent] = useState(0);
 
   useEffect(() => {
     document.body.className = "mood-" + SCENE_META[current].mood;
+  }, [current]);
+
+  // Chapters: let scrolling / arrow keys move between chapters, but only once the
+  // active scene's own content is scrolled to its edge.
+  useEffect(() => {
+    if (current < CH_START || current > CH_END) return;
+    let lock = false;
+
+    const advance = (dir) => {
+      if (lock) return;
+      const next = current + dir;
+      if (next < CH_START || next > CH_END) return;
+      lock = true;
+      setCurrent(next);
+      setTimeout(() => {
+        lock = false;
+      }, 750);
+    };
+
+    const atEdge = (dir) => {
+      const el = document.querySelector(".scene.active");
+      if (!el) return true;
+      if (dir > 0) return el.scrollTop + el.clientHeight >= el.scrollHeight - 2;
+      return el.scrollTop <= 2;
+    };
+
+    const onWheel = (e) => {
+      if (Math.abs(e.deltaY) < 24) return;
+      const dir = e.deltaY > 0 ? 1 : -1;
+      if (atEdge(dir)) advance(dir);
+    };
+
+    let touchY = null;
+    const onTouchStart = (e) => {
+      touchY = e.touches[0].clientY;
+    };
+    const onTouchEnd = (e) => {
+      if (touchY == null) return;
+      const dy = touchY - e.changedTouches[0].clientY;
+      touchY = null;
+      if (Math.abs(dy) < 60) return;
+      const dir = dy > 0 ? 1 : -1;
+      if (atEdge(dir)) advance(dir);
+    };
+
+    const onKey = (e) => {
+      if (e.key === "ArrowRight" || e.key === "ArrowDown") advance(1);
+      if (e.key === "ArrowLeft" || e.key === "ArrowUp") advance(-1);
+    };
+
+    window.addEventListener("wheel", onWheel, { passive: true });
+    window.addEventListener("touchstart", onTouchStart, { passive: true });
+    window.addEventListener("touchend", onTouchEnd, { passive: true });
+    window.addEventListener("keydown", onKey);
+    return () => {
+      window.removeEventListener("wheel", onWheel);
+      window.removeEventListener("touchstart", onTouchStart);
+      window.removeEventListener("touchend", onTouchEnd);
+      window.removeEventListener("keydown", onKey);
+    };
   }, [current]);
 
   const meta = SCENE_META[current];
@@ -76,24 +137,23 @@ export default function App() {
         <Proposal active={current === 13} goTo={setCurrent} />
         <Celebration active={current === 14} goTo={setCurrent} index={14} />
         <Song active={current === 15} goTo={setCurrent} index={15} />
-        <Final active={current === 16} goTo={setCurrent} momentsIndex={MOMENTS_START} />
+        <Final active={current === 16} goTo={setCurrent} storyIndex={CH_START} />
 
-        {moments.map((m, i) => (
-          <MomentScene
-            key={m.id}
-            active={current === MOMENTS_START + i}
+        {chapters.map((c, i) => (
+          <Chapter
+            key={c.id}
+            active={current === CH_START + i}
             goTo={setCurrent}
-            index={MOMENTS_START + i}
-            moment={m}
+            index={CH_START + i}
+            chapter={c}
             position={i + 1}
-            total={moments.length}
-            isFirst={i === 0}
-            isLast={i === moments.length - 1}
+            total={chapters.length}
+            homeIndex={CH_START}
           />
         ))}
       </div>
 
-      <MomentsNav current={current} goTo={setCurrent} startIndex={MOMENTS_START} />
+      <ChapterNav current={current} goTo={setCurrent} startIndex={CH_START} visible={current >= CH_START} />
       <ConfettiCanvas />
     </>
   );

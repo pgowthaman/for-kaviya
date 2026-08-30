@@ -537,113 +537,311 @@ p.body-text.emphasis, .celebrate-line.emphasis { color: var(--accent); font-weig
   border-top: 1px solid var(--border);
 }
 
-/* ---------- moment pages ---------- */
-.moment-photo {
+/* ---------- story chapters ---------- */
+.chapter-body {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 56px; /* clear the chapter rail */
+}
+.chapter-body h1 { margin-bottom: 2px; }
+
+.chapter-perspective {
+  font-size: 12px;
+  font-style: italic;
+  color: var(--ink-faint);
+  margin: 0 0 6px;
+}
+
+.chapter-photo {
   width: auto;
   max-width: min(100%, 340px);
-  max-height: 60vh;
+  max-height: 52vh;
   object-fit: contain;
   border-radius: var(--radius);
   border: 1px solid color-mix(in srgb, var(--accent) 24%, var(--border));
   box-shadow: 0 20px 44px rgba(0, 0, 0, 0.45);
-  margin: 6px 0 4px;
+  margin: 8px 0 6px;
 }
-.moment-photo-empty {
-  width: 100%;
+
+.chapter-lines { display: flex; flex-direction: column; gap: 3px; margin: 2px 0; }
+.chapter-lines p {
+  font-size: clamp(14px, 3.7vw, 16px);
+  color: var(--ink-soft);
+  line-height: 1.5;
+  margin: 0;
   max-width: 340px;
-  aspect-ratio: 4 / 3;
+}
+
+.chapter-note {
+  font-size: 12.5px;
+  font-style: italic;
+  color: var(--ink-faint);
+  margin: 4px 0;
+}
+
+.chapter-quote {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(16px, 4.6vw, 19px);
+  color: var(--ink);
+  line-height: 1.5;
+  margin: 10px 0;
+  max-width: 340px;
+  padding-left: 14px;
+  border-left: 2px solid var(--accent);
+  text-align: left;
+}
+
+.chapter-big {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(22px, 7vw, 30px);
+  color: var(--accent);
+  margin: 14px 0 8px;
+  line-height: 1.25;
+}
+
+/* checklist */
+.chapter-checklist {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0;
+  width: 100%;
+  max-width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.chapter-checklist li {
   display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: 46px;
-  background: radial-gradient(circle at 50% 40%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 70%);
+  justify-content: space-between;
+  gap: 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-size: 14px;
+  color: var(--ink);
+  text-align: left;
 }
-.moment-emoji { display: inline-block; }
-.moment-lines { display: flex; flex-direction: column; gap: 3px; margin: 4px 0 2px; min-height: 46px; }
-.moment-count {
-  font-size: 12px;
+.chapter-check { flex-shrink: 0; }
+
+/* before/during/after beats */
+.chapter-beats {
+  width: 100%;
+  max-width: 340px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 10px 0;
+}
+.chapter-beat {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  text-align: left;
+  border-left: 2px solid var(--border);
+  padding-left: 12px;
+}
+.chapter-beat-label { font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-faint); }
+.chapter-beat-text { font-size: 15px; color: var(--ink); }
+
+/* midnight clock moment */
+.chapter-clock {
+  width: 100%;
+  max-width: 340px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin: 8px 0;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--surface);
+}
+.chapter-clock .chapter-time {
+  font-family: "SFMono-Regular", Consolas, monospace;
+  font-size: 13px;
   letter-spacing: 0.14em;
   color: var(--ink-faint);
-  margin-top: 10px;
 }
-.moment-nav { display: flex; gap: 10px; margin-top: 4px; flex-wrap: wrap; justify-content: center; }
+.chapter-clock .chapter-clock-line {
+  font-family: var(--font-display);
+  font-size: clamp(16px, 4.6vw, 19px);
+  color: var(--ink);
+}
+.chapter-clock.hot {
+  border-color: color-mix(in srgb, var(--accent) 55%, var(--border));
+  background: color-mix(in srgb, var(--accent) 12%, var(--surface));
+  box-shadow: 0 0 40px color-mix(in srgb, var(--accent) 22%, transparent);
+}
+.chapter-clock.hot .chapter-clock-line { color: var(--accent); font-weight: 600; }
 
-.moments-toggle {
-  position: fixed;
-  top: calc(env(safe-area-inset-top, 0px) + 12px);
-  right: 12px;
-  z-index: 20;
-  appearance: none;
-  border: 1px solid var(--border);
-  background: var(--surface-strong);
-  color: var(--ink-soft);
-  font-family: var(--font-body);
-  font-size: 11.5px;
-  font-weight: 600;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
-  padding: 8px 13px;
-  border-radius: 999px;
-  cursor: pointer;
-  backdrop-filter: blur(12px);
-}
-.moments-toggle:active { transform: scale(0.95); }
-
-.moments-panel {
-  position: fixed;
-  inset: 0;
-  z-index: 19;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
-  background: rgba(6, 4, 8, 0.74);
-  backdrop-filter: blur(6px);
-  animation: fade-up 0.22s ease;
-}
-.moments-list {
-  list-style: none;
-  margin: 0;
-  padding: 8px;
+/* whatsapp-style chat */
+.chat {
   width: 100%;
   max-width: 340px;
-  max-height: 78dvh;
-  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin: 10px 0;
+}
+.chat-msg {
+  max-width: 80%;
+  padding: 9px 13px;
+  border-radius: 16px;
+  font-size: 14.5px;
+  line-height: 1.4;
+  text-align: left;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.chat-msg.in { opacity: 1; transform: none; }
+.chat-g {
+  align-self: flex-end;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--accent) 82%, #fff 0%), var(--accent-strong));
+  color: #23121a;
+  border-bottom-right-radius: 5px;
+}
+.chat-k {
+  align-self: flex-start;
+  background: var(--surface-strong);
+  border: 1px solid var(--border);
+  color: var(--ink);
+  border-bottom-left-radius: 5px;
+}
+
+/* phrase montage */
+.chapter-montage {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin: 12px 0;
+  max-width: 360px;
+}
+.chapter-montage span {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 7px 14px;
+  font-size: 13px;
+  color: var(--ink-soft);
+  opacity: 0;
+  transform: translateY(6px) scale(0.98);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.chapter-montage span.in { opacity: 1; transform: none; }
+.chapter-montage.big span {
+  font-family: var(--font-display);
+  font-size: clamp(14px, 4vw, 17px);
+  color: var(--ink);
+  padding: 8px 16px;
+}
+
+/* interactive "things" cards */
+.chapter-cards {
+  width: 100%;
+  max-width: 360px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 12px 0;
+}
+.chapter-card {
+  appearance: none;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--ink);
+  border-radius: 16px;
+  padding: 14px 12px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+.chapter-card-emoji { font-size: 24px; }
+.chapter-card-label { font-size: 13px; font-weight: 600; }
+.chapter-card-text {
+  font-size: 12px;
+  color: var(--ink-soft);
+  line-height: 1.4;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.3s ease, opacity 0.3s ease, margin 0.3s ease;
+}
+.chapter-card.open {
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+  background: color-mix(in srgb, var(--accent) 10%, var(--surface));
+  grid-column: span 2;
+}
+.chapter-card.open .chapter-card-text { max-height: 120px; opacity: 1; margin-top: 2px; }
+
+.chapter-ending {
+  margin: 14px 0 4px;
   display: flex;
   flex-direction: column;
   gap: 4px;
-  background: var(--surface-strong);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
 }
-.moments-list-head {
-  font-size: 11px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--ink-faint);
-  padding: 8px 12px 4px;
+.chapter-ending p {
+  font-family: var(--font-display);
+  font-size: clamp(15px, 4.4vw, 18px);
+  color: var(--accent);
+  margin: 0;
+  line-height: 1.45;
 }
-.moments-item {
-  width: 100%;
+
+.chapter-nav { display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap; justify-content: center; }
+
+/* timeline rail */
+.chapter-rail {
+  position: fixed;
+  left: 50%;
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 10px);
+  transform: translateX(-50%);
+  z-index: 12;
   display: flex;
-  align-items: center;
-  gap: 12px;
-  text-align: left;
-  appearance: none;
-  border: 1px solid transparent;
-  background: transparent;
-  color: var(--ink);
-  padding: 11px 12px;
-  border-radius: 14px;
-  cursor: pointer;
-  transition: background 0.15s ease, border-color 0.15s ease;
+  gap: 4px;
+  max-width: calc(100vw - 24px);
+  overflow-x: auto;
+  padding: 6px;
+  background: rgba(8, 6, 12, 0.7);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  backdrop-filter: blur(12px);
+  scrollbar-width: none;
 }
-.moments-item:hover { background: var(--surface); }
-.moments-item.current { border-color: color-mix(in srgb, var(--accent) 45%, var(--border)); background: var(--surface); }
-.moments-item-emoji { font-size: 20px; flex-shrink: 0; }
-.moments-item-text { display: flex; flex-direction: column; gap: 2px; }
-.moments-item-title { font-size: 14px; font-weight: 600; }
-.moments-item-date { font-size: 11.5px; color: var(--ink-faint); letter-spacing: 0.04em; }
+.chapter-rail::-webkit-scrollbar { display: none; }
+.chapter-rail-node {
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: var(--ink-faint);
+  font-family: var(--font-body);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+  padding: 6px 9px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+.chapter-rail-node.done { color: var(--ink-soft); }
+.chapter-rail-node.current {
+  color: #23121a;
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+}
 
 /* ---------- confetti ---------- */
 #confetti-canvas {
@@ -655,7 +853,7 @@ p.body-text.emphasis, .celebrate-line.emphasis { color: var(--accent); font-weig
 
 /* ---------- reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
-  .particle, .wave, .tl-node, .reveal-list li, .values-list li {
+  .particle, .wave, .tl-node, .reveal-list li, .values-list li, .chat-msg, .chapter-montage span {
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;
