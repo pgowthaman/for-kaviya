@@ -30,64 +30,17 @@ export default function App() {
     document.body.className = "mood-" + SCENE_META[current].mood;
   }, [current]);
 
-  // Chapters: let scrolling / arrow keys move between chapters, but only once the
-  // active scene's own content is scrolled to its edge.
+  // Chapters are navigated only by clicking (Prev/Next buttons and the timeline
+  // rail). Left/Right arrow keys are a harmless desktop convenience; scroll and
+  // swipe are left alone so long chapters can be read normally.
   useEffect(() => {
     if (current < CH_START || current > CH_END) return;
-    let lock = false;
-
-    const advance = (dir) => {
-      if (lock) return;
-      const next = current + dir;
-      if (next < CH_START || next > CH_END) return;
-      lock = true;
-      setCurrent(next);
-      setTimeout(() => {
-        lock = false;
-      }, 750);
-    };
-
-    const atEdge = (dir) => {
-      const el = document.querySelector(".scene.active");
-      if (!el) return true;
-      if (dir > 0) return el.scrollTop + el.clientHeight >= el.scrollHeight - 2;
-      return el.scrollTop <= 2;
-    };
-
-    const onWheel = (e) => {
-      if (Math.abs(e.deltaY) < 24) return;
-      const dir = e.deltaY > 0 ? 1 : -1;
-      if (atEdge(dir)) advance(dir);
-    };
-
-    let touchY = null;
-    const onTouchStart = (e) => {
-      touchY = e.touches[0].clientY;
-    };
-    const onTouchEnd = (e) => {
-      if (touchY == null) return;
-      const dy = touchY - e.changedTouches[0].clientY;
-      touchY = null;
-      if (Math.abs(dy) < 60) return;
-      const dir = dy > 0 ? 1 : -1;
-      if (atEdge(dir)) advance(dir);
-    };
-
     const onKey = (e) => {
-      if (e.key === "ArrowRight" || e.key === "ArrowDown") advance(1);
-      if (e.key === "ArrowLeft" || e.key === "ArrowUp") advance(-1);
+      if (e.key === "ArrowRight" && current < CH_END) setCurrent(current + 1);
+      if (e.key === "ArrowLeft" && current > CH_START) setCurrent(current - 1);
     };
-
-    window.addEventListener("wheel", onWheel, { passive: true });
-    window.addEventListener("touchstart", onTouchStart, { passive: true });
-    window.addEventListener("touchend", onTouchEnd, { passive: true });
     window.addEventListener("keydown", onKey);
-    return () => {
-      window.removeEventListener("wheel", onWheel);
-      window.removeEventListener("touchstart", onTouchStart);
-      window.removeEventListener("touchend", onTouchEnd);
-      window.removeEventListener("keydown", onKey);
-    };
+    return () => window.removeEventListener("keydown", onKey);
   }, [current]);
 
   const meta = SCENE_META[current];
