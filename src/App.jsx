@@ -153,6 +153,12 @@ export default function App() {
         ))}
       </div>
 
+      {current < CH_START && (
+        <button className="story-jump" onClick={() => setCurrent(CH_START)}>
+          ✦ our story
+        </button>
+      )}
+
       <ChapterNav current={current} goTo={setCurrent} startIndex={CH_START} visible={current >= CH_START} />
       <ConfettiCanvas />
     </>
