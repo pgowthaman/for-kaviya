@@ -121,7 +121,7 @@ export default function Chapter({ active, goTo, index, chapter, position, total,
   const isLast = position === total;
 
   return (
-    <Scene active={active}>
+    <Scene active={active} className="scene-scroll">
       <div className="chapter-body">
         {(chapter.date || chapter.eyebrow) && <div className="eyebrow">{chapter.date || chapter.eyebrow}</div>}
         <h1>{chapter.title}</h1>

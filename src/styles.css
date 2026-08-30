@@ -538,6 +538,14 @@ p.body-text.emphasis, .celebrate-line.emphasis { color: var(--accent); font-weig
 }
 
 /* ---------- story chapters ---------- */
+/* Pin content to the top so tall chapters stay fully scrollable
+   (a centered flex child clips its top overflow). */
+.scene.scene-scroll {
+  align-items: flex-start;
+  padding-top: calc(env(safe-area-inset-top, 0px) + 64px);
+}
+.scene.scene-scroll .scene-inner { margin-top: 0; }
+
 .story-jump {
   position: fixed;
   top: calc(env(safe-area-inset-top, 0px) + 12px);
