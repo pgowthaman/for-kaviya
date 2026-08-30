@@ -1,6 +1,6 @@
 import Scene from "../components/Scene.jsx";
 
-export default function Final({ active }) {
+export default function Final({ active, goTo, momentsIndex }) {
   return (
     <Scene active={active}>
       <p className="final-dates">29.07 → 16.08 → ❤️</p>
@@ -13,6 +13,11 @@ export default function Final({ active }) {
         <p className="body-text small">P.S.</p>
         <p className="body-text small">PS5 still negotiable. 😏</p>
       </div>
+      {goTo && (
+        <button className="btn btn-primary" onClick={() => goTo(momentsIndex)}>
+          Our moments →
+        </button>
+      )}
     </Scene>
   );
 }

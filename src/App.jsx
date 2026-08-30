@@ -15,9 +15,12 @@ import Proposal from "./scenes/Proposal.jsx";
 import Celebration from "./scenes/Celebration.jsx";
 import Song from "./scenes/Song.jsx";
 import Final from "./scenes/Final.jsx";
-import { SCENE_META, verifyQuestions, timelineRemember, timelineUs } from "./data.js";
+import MomentScene from "./scenes/MomentScene.jsx";
+import MomentsNav from "./components/MomentsNav.jsx";
+import { SCENE_META, verifyQuestions, timelineRemember, timelineUs, moments } from "./data.js";
 
 const MAIN_DOT_COUNT = SCENE_META.filter((s) => s.section === "main").length;
+const MOMENTS_START = SCENE_META.findIndex((s) => s.section === "moments");
 
 export default function App() {
   const [current, setCurrent] = useState(0);
@@ -73,8 +76,24 @@ export default function App() {
         <Proposal active={current === 13} goTo={setCurrent} />
         <Celebration active={current === 14} goTo={setCurrent} index={14} />
         <Song active={current === 15} goTo={setCurrent} index={15} />
-        <Final active={current === 16} />
+        <Final active={current === 16} goTo={setCurrent} momentsIndex={MOMENTS_START} />
+
+        {moments.map((m, i) => (
+          <MomentScene
+            key={m.id}
+            active={current === MOMENTS_START + i}
+            goTo={setCurrent}
+            index={MOMENTS_START + i}
+            moment={m}
+            position={i + 1}
+            total={moments.length}
+            isFirst={i === 0}
+            isLast={i === moments.length - 1}
+          />
+        ))}
       </div>
+
+      <MomentsNav current={current} goTo={setCurrent} startIndex={MOMENTS_START} />
       <ConfettiCanvas />
     </>
   );
