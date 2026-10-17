@@ -8,9 +8,34 @@ const imageModules = import.meta.glob("../assets/moments/*.{jpg,jpeg,png,webp,gi
   query: "?url",
   import: "default",
 });
-const imageById = {};
+// <id>.jpg, <id>-2.jpg, <id>-3.jpg ... => several photos for one chapter
+const imagesById = {};
 for (const path in imageModules) {
-  imageById[path.split("/").pop().replace(/\.[^.]+$/, "")] = imageModules[path];
+  const name = path.split("/").pop().replace(/\.[^.]+$/, "");
+  const id = name.replace(/-\d+$/, "");
+  (imagesById[id] ||= []).push({ name, url: imageModules[path] });
+}
+for (const id in imagesById) imagesById[id].sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true }));
+
+function Photos({ photos, title, caption }) {
+  const [zoom, setZoom] = useState(null);
+  return (
+    <>
+      <div className={`chapter-photos${photos.length > 1 ? " multi" : ""}`}>
+        {photos.map((p, i) => (
+          <figure key={p.name} className="polaroid" style={{ "--tilt": `${i % 2 ? 2 : -2}deg` }}>
+            <img src={p.url} alt={title} loading="lazy" onClick={() => setZoom(p.url)} />
+            {i === 0 && caption && <figcaption>{caption}</figcaption>}
+          </figure>
+        ))}
+      </div>
+      {zoom && (
+        <div className="lightbox" onClick={() => setZoom(null)}>
+          <img src={zoom} alt={title} />
+        </div>
+      )}
+    </>
+  );
 }
 
 function Chat({ msgs, active }) {
@@ -117,7 +142,7 @@ function Block({ block, active }) {
 }
 
 export default function Chapter({ active, goTo, index, chapter, position, total, homeIndex }) {
-  const img = imageById[chapter.id];
+  const photos = imagesById[chapter.id];
   const isLast = position === total;
 
   return (
@@ -131,7 +156,7 @@ export default function Chapter({ active, goTo, index, chapter, position, total,
             {t}
           </p>
         ))}
-        {img && <img className="chapter-photo" src={img} alt={chapter.title} />}
+        {photos && <Photos photos={photos} title={chapter.title} caption={chapter.caption} />}
 
         {chapter.blocks?.map((b, i) => (
           <Block key={i} block={b} active={active} />
