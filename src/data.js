@@ -304,7 +304,7 @@ export const chapters = [
   },
   {
     id: "night-changed",
-    rail: "25 AUG",
+    rail: "25 AUG · 2AM",
     date: "25 · 08 · 2026",
     mood: "proposal",
     title: "The Night Everything Changed",
@@ -329,7 +329,7 @@ export const chapters = [
   },
   {
     id: "proposal",
-    rail: "25 AUG",
+    rail: "25 AUG · ASK",
     date: "25 August 2026",
     mood: "proposal",
     title: "Proposal Day",
