@@ -929,3 +929,14 @@ p.body-text.emphasis, .celebrate-line.emphasis { color: var(--accent); font-weig
 .chapter-body > *:nth-child(n+5) { animation-delay: 0.24s; }
 @keyframes block-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) { .polaroid, .chapter-body > * { animation: none; } }
+
+/* ---------- laptop / desktop layout ---------- */
+@media (min-width: 640px) {
+  #stage { width: min(560px, 100%); max-width: none; flex: 0 0 auto; }
+}
+@media (min-width: 1000px) {
+  #stage { width: 640px; max-width: none; height: min(100dvh - 48px, 900px); }
+  .scene-inner { max-width: 520px; }
+  .chapter-body { max-width: 540px; }
+  h1 { font-size: clamp(34px, 3.2vw, 44px); }
+}
