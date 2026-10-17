@@ -17,11 +17,11 @@ for (const path in imageModules) {
 }
 for (const id in imagesById) imagesById[id].sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true }));
 
-function Photos({ photos, title, caption }) {
+function Photos({ photos, title, caption, style }) {
   const [zoom, setZoom] = useState(null);
   return (
     <>
-      <div className={`chapter-photos${photos.length > 1 ? " multi" : ""}`}>
+      <div className={`chapter-photos ps-${style || "polaroid"}${photos.length > 1 ? " multi" : ""}`}>
         {photos.map((p, i) => (
           <figure key={p.name} className="polaroid" style={{ "--tilt": `${i % 2 ? 2 : -2}deg` }}>
             <img src={p.url} alt={title} loading="lazy" onClick={() => setZoom(p.url)} />
@@ -136,6 +136,15 @@ function Block({ block, active }) {
       return <Montage items={block.items} big={block.big} active={active} />;
     case "cards":
       return <Cards items={block.items} />;
+    case "counter": {
+      const days = Math.max(0, Math.floor((Date.now() - new Date(block.from + "T00:00:00").getTime()) / 86400000));
+      return (
+        <div className="chapter-counter">
+          <span className="chapter-counter-num">{days}</span>
+          <span className="chapter-counter-label">{block.label}</span>
+        </div>
+      );
+    }
     default:
       return null;
   }
@@ -156,7 +165,7 @@ export default function Chapter({ active, goTo, index, chapter, position, total,
             {t}
           </p>
         ))}
-        {photos && <Photos photos={photos} title={chapter.title} caption={chapter.caption} />}
+        {photos && <Photos photos={photos} title={chapter.title} caption={chapter.caption} style={chapter.photoStyle} />}
 
         {chapter.blocks?.map((b, i) => (
           <Block key={i} block={b} active={active} />
